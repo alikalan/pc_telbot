@@ -9,7 +9,7 @@ clean:
 	@rm -Rf */__pycache__
 	@rm -Rf */*.pyc
 
-run_api:
+run:
 	python telegram/bot.py
 
 docker_build:
