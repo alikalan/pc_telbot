@@ -13,4 +13,4 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 ENV PYTHONPATH="${PYTHONPATH}:/app"
 
 # Expose the port and start the application
-CMD ["python", "telegram/bot.py"]
+CMD ["python", "telegram/bot.py"]  --host 0.0.0.0 --port $PORT

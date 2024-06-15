@@ -1,7 +1,8 @@
+import os
 import requests
 
 def get_stocks(plz):
-    url = 'https://pistachio-crawler-lempkfijgq-ew.a.run.app/crawl'
+    url = os.environ.get('URL')
 
     stocks = requests.get(url, params = {"plz": plz})
 
