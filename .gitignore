@@ -113,3 +113,6 @@ dmypy.json
 Thumbs.db
 ehthumbs.db
 *.stackdump
+
+# test stuff
+test.json

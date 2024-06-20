@@ -1,2 +1,3 @@
 requests
 pyTelegramBotAPI
+Flask>=1.0,<3.0
