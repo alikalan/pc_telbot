@@ -13,10 +13,28 @@ logging.basicConfig(level=logging.DEBUG)
 
 @bot.message_handler(commands=['start', 'hello'])
 def send_welcome(message):
-    bot.reply_to(message, "Hi! Gib mir eine Postleitzahl und ich zeige dir welche DM-Filialen in der Nähe wie viele Pistazienschnitte auf Lager haben!")
+    """
+    Sends a welcome message when the /start or /hello command is received.
+
+    Args:
+        message (telebot.types.Message): The message object containing the user's command.
+
+    Returns:
+        None
+    """
+    bot.reply_to(message, "Hi! Gib mir eine Postleitzahl und ich zeige dir welche DM-Filialen in der Nähe wie viele Pistazienschnitte auf Lager haben! Bspw. /80335")
 
 @bot.message_handler(func=lambda msg: True)
 def send_stocks(message):
+    """
+    Sends stock information based on the received message containing a postal code (PLZ).
+
+    Args:
+        message (telebot.types.Message): The message object containing the user's input, e.g. "/80335".
+
+    Returns:
+        None
+    """
     logging.debug(f"Received message: {message.text}")
     stocks = get_stocks(message.text.strip("/"))
     logging.debug(f"Stocks response: {stocks}")
@@ -32,10 +50,25 @@ def send_stocks(message):
 
 @app.route('/')
 def landing():
+    """
+    Default landing route for the flask web app.
+
+    Returns:
+        str: A simple "Ok" message.
+    """
     return "Ok"
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
+    """
+    Handles incoming webhook requests from Telegram.
+
+    This route processes incoming updates from Telegram, ensuring they are in the correct format
+    and passing them to the bot for further processing.
+
+    Returns:
+        flask.Response: A JSON response indicating the status of the request.
+    """
     logging.debug("Received webhook request")
     if request.headers.get('content-type') == 'application/json':
         json_string = request.get_data().decode('utf-8')
@@ -48,5 +81,5 @@ def webhook():
         return jsonify(status='error', message='Invalid content-type')
 
 if __name__ == "__main__":
-    # app.run()
+    # Start the Flask web server
     app.run(host='0.0.0.0', port=8000)
